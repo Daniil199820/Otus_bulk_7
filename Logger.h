@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <chrono>
-
+#include <string>
 class Logger{
 public:
     static Logger& getInstance(){
@@ -13,7 +13,7 @@ public:
     void info(const std::string& message){
         if(!flag_opened_file){
             auto t = std::chrono::system_clock::now();
-            file.open(static_cast<std::string>(std::chrono::system_clock::now()));
+            file.open("file");
         }
         file << message << "\n";
     }
@@ -27,8 +27,7 @@ public:
 private:
     std::ofstream file;
     bool flag_opened_file = false;
-
-
+    
     Logger() = default;
     Logger(const Logger& root) = delete;
     Logger& operator=(const Logger&) = delete;
