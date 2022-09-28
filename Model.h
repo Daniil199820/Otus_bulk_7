@@ -5,45 +5,53 @@ class Application;
 
 class ICommmandHandler{
 public:
-    virtual void begin_state(Application* ) = 0;
-    virtual void end_state(Application*)=0;
-    virtual void add_command_state(Application*)=0;
+    virtual void begin(Application* ) = 0;
+    virtual void end(Application*)=0;
+    virtual void add_command(Application*)=0;
 };
 
 using ICommmandHandlerPtr = std::unique_ptr<ICommmandHandler>;
 
 class Application{
 public:
-    Application();
+    Application(int counter):counter(counter){}
 
     void set_current(ICommmandHandlerPtr hPtr){
         m_handler = std::move(hPtr);
     }
-    void begin_state(){
-        m_handler->begin_state(this);
+    void begin(){
+        m_handler->begin(this);
     }
-    void end_state(){
-        m_handler->end_state(this);
+    void end(){
+        m_handler->end(this);
     }
-    void add_command_state(){
-        m_handler->add_command_state(this);
+    void add_command(){
+        m_handler->add_command(this);
+    }
+
+    int get_counter() const{
+        return counter;
     }
 
 private:
     ICommmandHandlerPtr m_handler;
+    int counter;
 };
 
 class DynamicState: public ICommmandHandler{
 public:
-    void begin_state(Application*) override {
+    void begin(Application*) override {
         ++counter;
     }
 
-    void end_state(Application){
+    void end(Application* app) override {
         --counter;
+        if(counter==0){
+        app-> set_current(ICommmandHandlerPtr{new DynamicState()});
+        }
     }
 
-    void add_command_state(){
+    void add_command(Application*) override {
 
     }
 
@@ -53,18 +61,19 @@ private:
 
 class StaticState: public ICommmandHandler{
 public:
-    void begin_state(Application*) override {
-        
+    void begin(Application* app) override {
+        app-> set_current(ICommmandHandlerPtr{new DynamicState()});
     }
 
-    void end_state(Application){
+    void end(Application* ) override {
 
     }
 
-    void add_command_state(){
+    void add_command(Application* app) override {
         ++counter;
-        if(counter)
+        if(counter == app->get_counter());
     }
+
 
 private:
     int counter = 0;
