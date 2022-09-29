@@ -10,7 +10,7 @@ public:
         return instance;
     }
 
-    void info(const std::string& message){
+    void write(const std::string& message){
         if(!flag_opened_file){
             auto t = std::chrono::system_clock::now();
             file.open("file");

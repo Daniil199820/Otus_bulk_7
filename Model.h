@@ -1,6 +1,9 @@
 #pragma once 
 #include<string>
 #include<memory>
+#include "Storage.h"
+#include "Logger.h"
+
 class Application;
 
 class ICommmandHandler{
@@ -14,7 +17,7 @@ using ICommmandHandlerPtr = std::unique_ptr<ICommmandHandler>;
 
 class Application{
 public:
-    Application(int counter):counter(counter){}
+    Application(int counter,Storage* store):counter(counter),store(store){}
 
     void set_current(ICommmandHandlerPtr hPtr){
         m_handler = std::move(hPtr);
@@ -36,6 +39,7 @@ public:
 private:
     ICommmandHandlerPtr m_handler;
     int counter;
+    Storage* store;
 };
 
 class DynamicState: public ICommmandHandler{
@@ -47,7 +51,7 @@ public:
     void end(Application* app) override {
         --counter;
         if(counter==0){
-        app-> set_current(ICommmandHandlerPtr{new DynamicState()});
+        app-> set_current(ICommmandHandlerPtr{new StaticState()});
         }
     }
 
@@ -71,7 +75,10 @@ public:
 
     void add_command(Application* app) override {
         ++counter;
-        if(counter == app->get_counter());
+        if(counter == app->get_counter()){
+            //app->store->add_command
+        }
+        
     }
 
 
@@ -108,8 +115,8 @@ public:
             return 0;
         }
 
-        _command = cur_command;
-        add_command(cur_command);
+        Logger::getInstance().write(cur_command);
+        
 
         return 0;
     }
@@ -120,78 +127,3 @@ public:
     }
 };
 
-/*
-  class LoginHandler : public ICommandHandler {
-    public:
-        void login(Application *) override {
-            std::cout << "already login" << std::endl;
-        }
-        void do_it(Application *m) override {
-            std::cout << "success" << std::endl;
-            /*std::cout << "start work" << std::endl;
-            m->set_current(ICommandHandlerPtr{new InProgressHandler()});*/
-        }
-        void logout(Application *m) override;
-    };
-
-    class AnonymousHandler : public ICommandHandler {
-    public:
-        void login(Application *m) override {
-            std::cout << "login success" << std::endl;
-            m->set_current(ICommandHandlerPtr{new LoginHandler()});  // Чтобы переключить состояние, нужно подать другой объект-состояние в контекст.
-        }
-        void do_it(Application *) override {
-            std::cout << "anonymous error" << std::endl;
-        }
-        void logout(Application *m) override {
-            std::cout << "already logout" << std::endl;
-        }
-    };
-
-    /*class InProgressHandler : public ICommandHandler {
-    public:
-        void login(Application *) override {
-            std::cout << "already login" << std::endl;
-        }
-        void do_it(Application *m) override {
-            std::cout << "stop work" << std::endl;
-            m->set_current(ICommandHandlerPtr{new LoginHandler()});
-        }
-        void logout(Application *) override {
-            std::cout << "error: stop working first" << std::endl;
-        }
-    };*/
-
-    void LoginHandler::logout(Application *m) {
-        /*
-        Состояние получает указатель на объект контекста. 
-        Через него не только можно получать из контекста нужную информацию, но и осуществлять смену его состояния.
-        */
-        std::cout << "work as anonymous" << std::endl;
-        m->set_current(ICommandHandlerPtr{new AnonymousHandler()});
-    }
-
-    Application::Application() {
-        m_handler = ICommandHandlerPtr{new AnonymousHandler()};
-        std::cout << std::endl;
-    }
-
-    // Переходы сложно отследить!
-
-    void example() {
-        std::cout << "pattern::example" << std::endl;
-
-        Application app;
-
-        app.do_it();
-        app.logout();
-        app.login();
-        app.do_it();
-        app.login();
-        app.logout();
-
-        std::cout << std::endl << std::endl;
-    }
-}
-
-*/
