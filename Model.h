@@ -3,33 +3,38 @@
 #include<memory>
 #include "Storage.h"
 #include "Logger.h"
+#include "CommandView.h"
 
 class Application;
 
 class ICommmandHandler{
 public:
-    virtual void begin(Application* ) = 0;
-    virtual void end(Application*)=0;
-    virtual void add_command(Application*)=0;
+    virtual bool begin(Application* ) = 0;
+    virtual bool end(Application*)=0;
+    virtual bool add_command(Application*)=0;
+    virtual bool end_of_f(Application*)=0;
 };
 
 using ICommmandHandlerPtr = std::unique_ptr<ICommmandHandler>;
 
 class Application{
 public:
-    Application(int counter,Storage* store):counter(counter),store(store){}
+    Application(int counter):counter(counter){}
 
     void set_current(ICommmandHandlerPtr hPtr){
         m_handler = std::move(hPtr);
     }
-    void begin(){
-        m_handler->begin(this);
+    bool begin(){
+        return m_handler->begin(this);
     }
-    void end(){
-        m_handler->end(this);
+    bool end(){
+        return m_handler->end(this);
     }
-    void add_command(){
-        m_handler->add_command(this);
+    bool end_of_f(){
+        return m_handler->end_of_f(this);
+    }
+    bool add_command(){
+        return m_handler->add_command(this);
     }
 
     int get_counter() const{
@@ -39,74 +44,126 @@ public:
 private:
     ICommmandHandlerPtr m_handler;
     int counter;
-    Storage* store;
-};
-
-class DynamicState: public ICommmandHandler{
-public:
-    void begin(Application*) override {
-        ++counter;
-    }
-
-    void end(Application* app) override {
-        --counter;
-        if(counter==0){
-        app-> set_current(ICommmandHandlerPtr{new StaticState()});
-        }
-    }
-
-    void add_command(Application*) override {
-
-    }
-
-private:
-    int counter = 0;
 };
 
 class StaticState: public ICommmandHandler{
 public:
-    void begin(Application* app) override {
-        app-> set_current(ICommmandHandlerPtr{new DynamicState()});
-    }
+    bool begin(Application* app) override;
 
-    void end(Application* ) override {
+    bool end(Application* ) override;
 
-    }
+    bool add_command(Application* app) override;
 
-    void add_command(Application* app) override {
-        ++counter;
-        if(counter == app->get_counter()){
-            //app->store->add_command
-        }
-        
-    }
+    bool end_of_f(Application* ) override;
 
 
 private:
     int counter = 0;
 };
 
+class DynamicState: public ICommmandHandler{
+public:
+    bool begin(Application*) override {
+        ++counter;
+        return true;
+    }
+
+    bool end(Application* app) override {
+        --counter;
+        if(counter==0){   
+            app-> set_current(ICommmandHandlerPtr{new StaticState()});
+            return false;
+        }
+        return true;
+    }
+
+    bool end_of_f(Application* app) override{
+        return true;
+    }
+
+    bool add_command(Application*) override {
+        return true;
+    }
+
+private:
+    int counter = 1;
+};
+
+bool StaticState::begin(Application* app){
+        app-> set_current(ICommmandHandlerPtr{new DynamicState()});
+        return false;
+    } 
+
+bool StaticState::end(Application* ){ return true;}
+
+bool StaticState::add_command(Application* app){
+        ++counter;
+        if(counter>app->get_counter()){
+            counter = 0;
+            return false;
+        }
+        return true;
+    }
+
+bool StaticState::end_of_f(Application*){
+    return false;
+}
+
 class CommandModel{
 private:
     std::string _command;
+    
+    Application* app;
 
-    void start(){
+    Storage* store;
 
+    void begin(){
+        if(!app->begin()){
+            store->pull_commands();
+        }
     }
 
     void end(){
-
+        if(!app->end()){
+            store->pull_commands();
+        }
     }
 
-    void add_command(const std::string& _command){
+    void add_command(const std::string& cur_command){
+        if(app->add_command()){
+            store->add_command(cur_command);
+        }
+        else{
+            store->pull_commands();
+            store->add_command(cur_command);
+        }
+    }
 
-    }    
-
+    void end_of_f(){
+        if(!app->end_of_f()){
+            store->pull_commands();
+        }
+    }
+    
 public:
+    CommandModel(Application* app, Storage* store):app(app),store(store){
+        app->set_current(ICommmandHandlerPtr{new StaticState()});
+    }
+
+    CommandModel(int block_size){
+        app = new Application(block_size);
+        store = new Storage();
+        app->set_current(ICommmandHandlerPtr{new StaticState()});
+    }
+
+    Storage* get_ref_store(){
+        return store;
+    }
+
     int setCommand(const std::string& cur_command){
 
         if(cur_command == std::string("{" )){
-            start();
+            begin();
             return 0;
         }
 
@@ -115,9 +172,13 @@ public:
             return 0;
         }
 
-        Logger::getInstance().write(cur_command);
-        
+        if(cur_command == std::string("EOF")){
+            end_of_f();
+            return 0;
+        }
 
+        add_command(cur_command);
+                
         return 0;
     }
 
@@ -127,3 +188,22 @@ public:
     }
 };
 
+
+int main(){
+
+    CommandModel cm(3);
+
+    CommandView cv(cm.get_ref_store());
+
+    cm.setCommand("ddd");
+    cm.setCommand("aaa");
+    cm.setCommand("aaa");
+    cm.setCommand("aaa");
+    cm.setCommand("EOF");
+    cm.setCommand("ytuyt");
+    cm.setCommand("{");
+    cm.setCommand("sqS");
+    cm.setCommand("sqS");
+    cm.setCommand("EOF");
+    return 0;
+}

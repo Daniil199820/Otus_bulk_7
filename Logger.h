@@ -1,8 +1,8 @@
 #pragma once  
 
 #include <fstream>
-#include <chrono>
 #include <string>
+
 class Logger{
 public:
     static Logger& getInstance(){
@@ -10,17 +10,22 @@ public:
         return instance;
     }
 
+    void open_log(const std::string& filename){
+        close_log();
+        file.open(filename);
+        flag_opened_file = true;
+    }
+
     void write(const std::string& message){
-        if(!flag_opened_file){
-            auto t = std::chrono::system_clock::now();
-            file.open("file");
+        if(flag_opened_file){
+            file << message << "\n";
         }
-        file << message << "\n";
     }
 
     void close_log(){
         if(flag_opened_file){
             file.close();
+            flag_opened_file = false;
         }
     }
 
