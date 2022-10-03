@@ -4,9 +4,9 @@
 
 class Controller{
 public:
-    Controller(CommandModel* mdl);
+   inline Controller(CommandModel* mdl);
 
-    void start();
+   inline void start();
 private:
     CommandModel* mdl;
 };

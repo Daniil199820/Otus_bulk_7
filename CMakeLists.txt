@@ -10,12 +10,11 @@ set(INSTALL_GTEST OFF)
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/GTest_module" 
 "googletest")
 
-add_executable(bulk main.cpp)
-add_executable(bulk_Model Model.cpp)
-add_executable(bulk_Controller Controller.cpp)
+
+add_executable(bulk Model.cpp Controller.cpp main.cpp)
 add_executable(tests_ tests_.cpp )
 
-set_target_properties(bulk bulk_Model bulk_Controller tests PROPERTIES
+set_target_properties(bulk tests_ PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
@@ -24,6 +23,13 @@ set_target_properties(bulk bulk_Model bulk_Controller tests PROPERTIES
 target_include_directories(
     tests_ PRIVATE
    ${GTEST_INCLUDE_DIRS}
+)
+
+
+
+target_include_directories(
+    bulk PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 target_link_libraries(tests_ PRIVATE
@@ -37,26 +43,16 @@ if (MSVC)
     target_compile_options(bulk PRIVATE
         /W4
     )
-    target_compile_options(bulk_Model PRIVATE
-        /W4
-    )
-    target_compile_options(bulk_Controller PRIVATE
-        /W4
-    )
+   
     target_compile_options(tests_ PRIVATE
         /W4
     )
 
 else ()
     target_compile_options(bulk PRIVATE
-        -Wall -Wextra -pedantic -Werror
+        -Wall -Wextra -pedantic 
     )
-    target_compile_options(bulk_Model PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-    target_compile_options(bulk_Controller PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
+   
     target_compile_options(tests_ PRIVATE
         -Wall -Wextra -pedantic -Werror
     )

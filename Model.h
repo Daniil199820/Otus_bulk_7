@@ -76,7 +76,7 @@ public:
         return true;
     }
 
-    bool end_of_f(Application* app) override{
+    bool end_of_f(Application* ) override{
         return true;
     }
 
@@ -116,24 +116,24 @@ private:
 
     Storage* store;
 
-    void begin();
+   inline void begin();
 
-    void end();
+    inline void end();
 
-    void add_command(const std::string& cur_command);
+    inline void add_command(const std::string& cur_command);
 
-    void end_of_f();
+    inline void end_of_f();
     
 public:
-    CommandModel(Application* app, Storage* store);
+    inline CommandModel(Application* app, Storage* store);
 
-    CommandModel(int block_size);
+    inline CommandModel(int block_size);
 
-    Storage* get_ref_store();
+    inline Storage* get_ref_store();
 
-    int setCommand(const std::string& cur_command);
+    inline int setCommand(const std::string& cur_command);
 
-    std::string getCommand() const;
+    inline std::string getCommand() const;
 };
 
 

@@ -3,7 +3,7 @@
 #include "Observer.h"
 #include "Storage.h"
 #include "Logger.h"
-
+#include <iostream>
 class CommandView:public Observer{
 public: 
     CommandView(Storage* store):store(store){
