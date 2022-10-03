@@ -1,6 +1,6 @@
-#include"Model.h"
 #include"CommandView.h"
 #include "Controller.h"
+
 int main(int argc, char* argv[]){
     
     CommandModel cm(argc);

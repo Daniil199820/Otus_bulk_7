@@ -3,7 +3,6 @@
 #include<memory>
 #include "Storage.h"
 #include "Logger.h"
-#include "CommandView.h"
 
 class Application;
 
@@ -117,93 +116,24 @@ private:
 
     Storage* store;
 
-    void begin(){
-        if(!app->begin()){
-            store->pull_commands();
-        }
-    }
+    void begin();
 
-    void end(){
-        if(!app->end()){
-            store->pull_commands();
-        }
-    }
+    void end();
 
-    void add_command(const std::string& cur_command){
-        if(app->add_command()){
-            store->add_command(cur_command);
-        }
-        else{
-            store->pull_commands();
-            store->add_command(cur_command);
-        }
-    }
+    void add_command(const std::string& cur_command);
 
-    void end_of_f(){
-        if(!app->end_of_f()){
-            store->pull_commands();
-        }
-    }
+    void end_of_f();
     
 public:
-    CommandModel(Application* app, Storage* store):app(app),store(store){
-        app->set_current(ICommmandHandlerPtr{new StaticState()});
-    }
+    CommandModel(Application* app, Storage* store);
 
-    CommandModel(int block_size){
-        app = new Application(block_size);
-        store = new Storage();
-        app->set_current(ICommmandHandlerPtr{new StaticState()});
-    }
+    CommandModel(int block_size);
 
-    Storage* get_ref_store(){
-        return store;
-    }
+    Storage* get_ref_store();
 
-    int setCommand(const std::string& cur_command){
+    int setCommand(const std::string& cur_command);
 
-        if(cur_command == std::string("{" )){
-            begin();
-            return 0;
-        }
-
-        if(cur_command == std::string("}")){
-            end();
-            return 0;
-        }
-
-        if(cur_command == std::string("EOF")){
-            end_of_f();
-            return 0;
-        }
-
-        add_command(cur_command);
-                
-        return 0;
-    }
-
-
-    std::string getCommand() const{
-        return _command;
-    }
+    std::string getCommand() const;
 };
 
 
-int main(){
-
-    CommandModel cm(3);
-
-    CommandView cv(cm.get_ref_store());
-
-    cm.setCommand("ddd");
-    cm.setCommand("aaa");
-    cm.setCommand("aaa");
-    cm.setCommand("aaa");
-    cm.setCommand("EOF");
-    cm.setCommand("ytuyt");
-    cm.setCommand("{");
-    cm.setCommand("sqS");
-    cm.setCommand("sqS");
-    cm.setCommand("EOF");
-    return 0;
-}

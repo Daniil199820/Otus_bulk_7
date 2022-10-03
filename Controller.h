@@ -4,16 +4,9 @@
 
 class Controller{
 public:
-    Controller(CommandModel* mdl):mdl(mdl){}
+    Controller(CommandModel* mdl);
 
-    void start(){
-        std::string temp;
-        while(temp!="EOF"){
-            std::cin>>temp;
-            mdl->setCommand(std::move(temp));
-        }
-    }
-
+    void start();
 private:
     CommandModel* mdl;
 };
