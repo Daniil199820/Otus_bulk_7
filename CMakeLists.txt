@@ -11,7 +11,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/GTest_module"
 "googletest")
 
 
-add_executable(bulk Model.cpp Controller.cpp main.cpp)
+add_executable(bulk main.cpp)
 add_executable(tests_ tests_.cpp )
 
 set_target_properties(bulk tests_ PROPERTIES

@@ -4,9 +4,15 @@
 
 class Controller{
 public:
-   inline Controller(CommandModel* mdl);
+    Controller(CommandModel* mdl):mdl(mdl){}
 
-   inline void start();
+   void start(){
+    std::string temp;
+    while(temp!="EOF"){
+        std::cin>>temp;
+        mdl->setCommand(std::move(temp));
+    }
+}
 private:
     CommandModel* mdl;
 };

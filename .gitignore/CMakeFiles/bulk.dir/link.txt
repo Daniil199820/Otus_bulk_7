@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/bulk.dir/Model.cpp.o CMakeFiles/bulk.dir/Controller.cpp.o CMakeFiles/bulk.dir/main.cpp.o -o bulk 
