@@ -269,54 +269,6 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest_main.dir/build.make googletest/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-Controller.o: Controller.cpp.o
-.PHONY : Controller.o
-
-# target to build an object file
-Controller.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bulk.dir/build.make CMakeFiles/bulk.dir/Controller.cpp.o
-.PHONY : Controller.cpp.o
-
-Controller.i: Controller.cpp.i
-.PHONY : Controller.i
-
-# target to preprocess a source file
-Controller.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bulk.dir/build.make CMakeFiles/bulk.dir/Controller.cpp.i
-.PHONY : Controller.cpp.i
-
-Controller.s: Controller.cpp.s
-.PHONY : Controller.s
-
-# target to generate assembly for a file
-Controller.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bulk.dir/build.make CMakeFiles/bulk.dir/Controller.cpp.s
-.PHONY : Controller.cpp.s
-
-Model.o: Model.cpp.o
-.PHONY : Model.o
-
-# target to build an object file
-Model.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bulk.dir/build.make CMakeFiles/bulk.dir/Model.cpp.o
-.PHONY : Model.cpp.o
-
-Model.i: Model.cpp.i
-.PHONY : Model.i
-
-# target to preprocess a source file
-Model.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bulk.dir/build.make CMakeFiles/bulk.dir/Model.cpp.i
-.PHONY : Model.cpp.i
-
-Model.s: Model.cpp.s
-.PHONY : Model.s
-
-# target to generate assembly for a file
-Model.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bulk.dir/build.make CMakeFiles/bulk.dir/Model.cpp.s
-.PHONY : Model.cpp.s
-
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -386,12 +338,6 @@ help:
 	@echo "... gtest"
 	@echo "... gtest_main"
 	@echo "... tests_"
-	@echo "... Controller.o"
-	@echo "... Controller.i"
-	@echo "... Controller.s"
-	@echo "... Model.o"
-	@echo "... Model.i"
-	@echo "... Model.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

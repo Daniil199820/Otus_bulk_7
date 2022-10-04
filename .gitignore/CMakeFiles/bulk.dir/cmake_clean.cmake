@@ -1,8 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/bulk.dir/Controller.cpp.o"
-  "CMakeFiles/bulk.dir/Controller.cpp.o.d"
-  "CMakeFiles/bulk.dir/Model.cpp.o"
-  "CMakeFiles/bulk.dir/Model.cpp.o.d"
   "CMakeFiles/bulk.dir/main.cpp.o"
   "CMakeFiles/bulk.dir/main.cpp.o.d"
   "bulk"

@@ -3,7 +3,7 @@
 #include<memory>
 #include "Storage.h"
 #include "Logger.h"
-
+#include<iostream>
 class Application;
 
 class ICommmandHandler{
@@ -55,7 +55,6 @@ public:
 
     bool end_of_f(Application* ) override;
 
-
 private:
     int counter = 0;
 };
@@ -97,7 +96,7 @@ bool StaticState::end(Application* ){ return true;}
 
 bool StaticState::add_command(Application* app){
         ++counter;
-        if(counter>app->get_counter()){
+        if(counter>(app->get_counter()-1)){
             counter = 0;
             return false;
         }
@@ -116,24 +115,70 @@ private:
 
     Storage* store;
 
-   inline void begin();
+    void begin(){
+        if(!app->begin()){
+            store->pull_commands();
+        }
+    }
 
-    inline void end();
+    void end(){
+        if(!app->end()){
+            store->pull_commands();
+        }
+    }
 
-    inline void add_command(const std::string& cur_command);
+    void add_command(const std::string& cur_command){
+        if(app->add_command()){
+            store->add_command(cur_command);
+        }
+        else{
+            store->add_command(cur_command);
+            store->pull_commands();
+        }
+    }
 
-    inline void end_of_f();
     
 public:
-    inline CommandModel(Application* app, Storage* store);
+     CommandModel(Application* app, Storage* store):app(app),store(store){
+        app->set_current(ICommmandHandlerPtr{new StaticState()});
+    }
 
-    inline CommandModel(int block_size);
+    void end_of_f(){
+        if(!app->end_of_f()){
+            store->pull_commands();
+            }
+    }
 
-    inline Storage* get_ref_store();
+    CommandModel(int block_size){
+        app = new Application(block_size);
+        store = new Storage();
+        app->set_current(ICommmandHandlerPtr{new StaticState()});
+    }
 
-    inline int setCommand(const std::string& cur_command);
+    Storage* get_ref_store(){
+    return store;
+    }
 
-    inline std::string getCommand() const;
+    int setCommand(const std::string& cur_command){
+
+        if(cur_command == std::string("{" )){
+            begin();
+            return 0;
+        }
+
+        if(cur_command == std::string("}")){
+            end();
+            return 0;
+        }
+
+        add_command(cur_command);
+                
+        return 0;
+    }
+
+    std::string getCommand() const{
+        return _command;
+    }
 };
 
 

@@ -136,12 +136,12 @@ googletest/googletest/clean: googletest/googletest/CMakeFiles/gtest_main.dir/cle
 CMakeFiles/bulk.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bulk.dir/build.make CMakeFiles/bulk.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bulk.dir/build.make CMakeFiles/bulk.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=1,2,3,4 "Built target bulk"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=1,2 "Built target bulk"
 .PHONY : CMakeFiles/bulk.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/bulk.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/bulk.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles 0
 .PHONY : CMakeFiles/bulk.dir/rule
@@ -163,7 +163,7 @@ CMakeFiles/tests_.dir/all: googletest/googletest/CMakeFiles/gtest.dir/all
 CMakeFiles/tests_.dir/all: googletest/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests_.dir/build.make CMakeFiles/tests_.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests_.dir/build.make CMakeFiles/tests_.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=13,14 "Built target tests_"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=11,12 "Built target tests_"
 .PHONY : CMakeFiles/tests_.dir/all
 
 # Build rule for subdir invocation for target.
@@ -189,7 +189,7 @@ CMakeFiles/tests_.dir/clean:
 googletest/googlemock/CMakeFiles/gmock.dir/all: googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f googletest/googlemock/CMakeFiles/gmock.dir/build.make googletest/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) $(MAKESILENT) -f googletest/googlemock/CMakeFiles/gmock.dir/build.make googletest/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=5,6 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=3,4 "Built target gmock"
 .PHONY : googletest/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -216,7 +216,7 @@ googletest/googlemock/CMakeFiles/gmock_main.dir/all: googletest/googlemock/CMake
 googletest/googlemock/CMakeFiles/gmock_main.dir/all: googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f googletest/googlemock/CMakeFiles/gmock_main.dir/build.make googletest/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f googletest/googlemock/CMakeFiles/gmock_main.dir/build.make googletest/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=7,8 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=5,6 "Built target gmock_main"
 .PHONY : googletest/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -242,7 +242,7 @@ googletest/googlemock/CMakeFiles/gmock_main.dir/clean:
 googletest/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest.dir/build.make googletest/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest.dir/build.make googletest/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=9,10 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=7,8 "Built target gtest"
 .PHONY : googletest/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -268,7 +268,7 @@ googletest/googletest/CMakeFiles/gtest.dir/clean:
 googletest/googletest/CMakeFiles/gtest_main.dir/all: googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest_main.dir/build.make googletest/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest_main.dir/build.make googletest/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=11,12 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles --progress-num=9,10 "Built target gtest_main"
 .PHONY : googletest/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
