@@ -97,7 +97,7 @@ bool StaticState::end(Application* ){ return true;}
 
 bool StaticState::add_command(Application* app){
         ++counter;
-        if(counter>7){
+        if(counter>(app->get_counter()-1)){
             counter = 0;
             return false;
         }

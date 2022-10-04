@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[]){
     
-    CommandModel cm(argc);
+    CommandModel cm(3);
     CommandView cv(cm.get_ref_store());
     Controller ctrl(&cm);
     ctrl.start();
