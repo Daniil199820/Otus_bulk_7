@@ -5,11 +5,6 @@ set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
 project(bulk VERSION ${PROJECT_VERSION})
 
-set(INSTALL_GTEST OFF)
-
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/GTest_module" 
-"googletest")
-
 
 add_executable(bulk main.cpp)
 
