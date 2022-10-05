@@ -55,7 +55,6 @@ public:
 
     bool end_of_f(Application* ) override;
 
-
 private:
     int counter = 0;
 };
@@ -117,14 +116,14 @@ private:
     Storage* store;
 
     void begin(){
-            if(!app->begin()){
+        if(!app->begin()){
             store->pull_commands();
         }
     }
 
     void end(){
-    if(!app->end()){
-        store->pull_commands();
+        if(!app->end()){
+            store->pull_commands();
         }
     }
 
@@ -133,23 +132,24 @@ private:
             store->add_command(cur_command);
         }
         else{
-            store->pull_commands();
             store->add_command(cur_command);
+            store->pull_commands();
         }
     }
 
-     void end_of_f(){
-    if(!app->end_of_f()){
-        store->pull_commands();
-        }
-    }
     
 public:
      CommandModel(Application* app, Storage* store):app(app),store(store){
         app->set_current(ICommmandHandlerPtr{new StaticState()});
     }
 
-     CommandModel(int block_size){
+    void end_of_f(){
+        if(!app->end_of_f()){
+            store->pull_commands();
+            }
+    }
+
+    CommandModel(int block_size){
         app = new Application(block_size);
         store = new Storage();
         app->set_current(ICommmandHandlerPtr{new StaticState()});
@@ -171,11 +171,6 @@ public:
             return 0;
         }
 
-        if(cur_command == std::string("EOF")){
-            end_of_f();
-            return 0;
-        }
-
         add_command(cur_command);
                 
         return 0;
@@ -185,5 +180,4 @@ public:
         return _command;
     }
 };
-
 

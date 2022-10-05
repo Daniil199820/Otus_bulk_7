@@ -12,7 +12,6 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/GTest_module"
 
 
 add_executable(bulk main.cpp)
-add_executable(tests_ tests_.cpp )
 
 set_target_properties(bulk tests_ PROPERTIES
     CXX_STANDARD 17
@@ -20,10 +19,7 @@ set_target_properties(bulk tests_ PROPERTIES
 )
 
 
-target_include_directories(
-    tests_ PRIVATE
-   ${GTEST_INCLUDE_DIRS}
-)
+
 
 
 
@@ -32,29 +28,15 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(tests_ PRIVATE
-    gtest gtest_main
-)
+
 
 if (MSVC)
-
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
     target_compile_options(bulk PRIVATE
         /W4
     )
-   
-    target_compile_options(tests_ PRIVATE
-        /W4
-    )
-
 else ()
     target_compile_options(bulk PRIVATE
         -Wall -Wextra -pedantic 
-    )
-   
-    target_compile_options(tests_ PRIVATE
-        -Wall -Wextra -pedantic -Werror
     )
 endif()
 
@@ -72,6 +54,3 @@ set(CPACK_PACKAGE_CONTACT example@example.com)
 
 include(CPack)
 
-enable_testing()
-
-add_test(tests_ tests_)

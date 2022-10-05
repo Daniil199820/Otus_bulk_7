@@ -8,10 +8,10 @@ public:
 
    void start(){
     std::string temp;
-    while(temp!="EOF"){
-        std::cin>>temp;
+    while(std::getline(std::cin,temp)){
         mdl->setCommand(std::move(temp));
     }
+    mdl->end_of_f();
 }
 private:
     CommandModel* mdl;

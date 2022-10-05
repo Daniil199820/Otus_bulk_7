@@ -24,6 +24,6 @@ public:
         notifyUpdate();
         container_commands.clear();   
     }
-
+    
     std::deque<Element> container_commands; 
 };
