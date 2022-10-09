@@ -4,15 +4,15 @@
 
 class Controller{
 public:
-    Controller(CommandModel* mdl):mdl(mdl){}
+    Controller(std::unique_ptr<CommandModel> mdl):mdl(std::move(mdl)){}
 
    void start(){
     std::string temp;
     while(std::getline(std::cin,temp)){
-        mdl->setCommand(std::move(temp));
+        mdl.get()->setCommand(std::move(temp));
     }
-    mdl->end_of_f();
+    mdl.get()->end_of_f();
 }
 private:
-    CommandModel* mdl;
+std::unique_ptr<CommandModel> mdl;
 };

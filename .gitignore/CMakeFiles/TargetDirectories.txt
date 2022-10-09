@@ -1,0 +1,9 @@
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/bulk.dir
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/package.dir
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/package_source.dir
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/edit_cache.dir
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/rebuild_cache.dir
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/list_install_components.dir
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/install.dir
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/install/local.dir
+/home/daniil/cpp/Otus_bulk_7/.gitignore/CMakeFiles/install/strip.dir

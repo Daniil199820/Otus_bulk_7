@@ -111,36 +111,36 @@ class CommandModel{
 private:
     std::string _command;
     
-    Application* app;
+    std::unique_ptr<Application> app;
 
-    Storage* store;
+    std::unique_ptr<Storage> store;
 
     void begin(){
-        if(!app->begin()){
-            store->pull_commands();
+        if(!app.get()->begin()){
+            store.get()->pull_commands();
         }
     }
 
     void end(){
-        if(!app->end()){
-            store->pull_commands();
+        if(!app.get()->end()){
+            store.get()->pull_commands();
         }
     }
 
     void add_command(const std::string& cur_command){
-        if(app->add_command()){
-            store->add_command(cur_command);
+        if(app.get()->add_command()){
+            store.get()->add_command(cur_command);
         }
         else{
-            store->add_command(cur_command);
-            store->pull_commands();
+            store.get()->add_command(cur_command);
+            store.get()->pull_commands();
         }
     }
 
     
 public:
-     CommandModel(Application* app, Storage* store):app(app),store(store){
-        app->set_current(ICommmandHandlerPtr{new StaticState()});
+     CommandModel(std::unique_ptr<Application> app, std::unique_ptr<Storage> store):app(std::move(app)),store(std::move(store)){
+        app.get()->set_current(ICommmandHandlerPtr{new StaticState()});
     }
 
     void end_of_f(){
@@ -150,13 +150,13 @@ public:
     }
 
     CommandModel(int block_size){
-        app = new Application(block_size);
-        store = new Storage();
-        app->set_current(ICommmandHandlerPtr{new StaticState()});
+        app = std::make_unique<Application>(block_size);  
+        store = std::make_unique<Storage>();
+        app.get()->set_current(ICommmandHandlerPtr{new StaticState()});
     }
 
     Storage* get_ref_store(){
-    return store;
+    return store.get();
     }
 
     int setCommand(const std::string& cur_command){
