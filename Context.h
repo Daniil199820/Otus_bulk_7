@@ -4,7 +4,8 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-
+#include "Model.h"
+#include "CommandView.h"
 
 class Context
 {
@@ -28,8 +29,8 @@ private:
   void JoinThred();
   
 private:
-  std::shared_ptr<Commander> m_pCommander;
-  std::shared_ptr<Executer> m_pExecuter;
+  std::shared_ptr<CommandModel> m_pCommander;
+  std::shared_ptr<CommandView> m_pExecuter;
   std::shared_ptr<Logger> m_pLogger;
 
   std::stringstream _ssInputStream;
