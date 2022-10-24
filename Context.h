@@ -7,6 +7,7 @@
 #include "Model.h"
 #include "CommandView.h"
 
+
 class Context
 {
 public:
@@ -21,6 +22,10 @@ public:
   ~Context(){}
 
   void ProccessBuffer(const char* a_Buffer, std::size_t a_szSize){
+    {
+      std::unique_lock<std::mutex> lock(m_streamLock);
+      
+    }
     
   }
 
