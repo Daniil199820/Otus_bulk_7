@@ -15,24 +15,44 @@ public:
     std::ostream& _osLoggerOut, 
     std::ostream& _osMainMetricsOut, 
     std::ostream& _osLogMetricsOut, 
-    std::ostream& _oFileMetricsOut){
+    std::ostream& _oFileMetricsOut)
+    :m_bDone{false},m_thread{&Context::ParceBuffer,this}{
+        
+    }
+    
 
+  ~Context(){
+      m_bDone = true;
+      m_streamCheck.notify_all();
+      if (m_thread.joinable()){
+        m_thread.join();
+      }
+  }
+
+  void SetBuffer(const char* a_Buffer, std::size_t a_szSize){
+    {std::unique_lock<std::mutex> lock(m_streamLock);
+      _ssInputStream.write(a_Buffer, a_szSize);
     }
 
-  ~Context(){}
-
-  void ProccessBuffer(const char* a_Buffer, std::size_t a_szSize){
-    {
-      std::unique_lock<std::mutex> lock(m_streamLock);
-      
-    }
+    m_bNotified = true;
+    m_streamCheck.notify_one();
     
   }
 
-private:
-  void Procces();
-  void JoinThred();
-  
+  void ParceBuffer(){
+    while(!m_bDone){
+      std::unique_lock<std::mutex> locker(m_streamLock);
+      m_streamCheck.wait(locker,[&](){return m_bNotified || m_bDone;});
+      std::string tempLine;
+      while( std::getline(_ssInputStream,tempLine)){
+        m_pCommander->setCommand(std::move(tempLine));
+      }
+      m_pCommander->end_of_f();
+      _ssInputStream.clear();
+      m_bNotified = false;
+    }
+  }
+
 private:
   std::shared_ptr<CommandModel> m_pCommander;
   std::shared_ptr<CommandView> m_pExecuter;
